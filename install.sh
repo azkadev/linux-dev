@@ -49,7 +49,7 @@ sudo apt-get install -y --no-install-recommends \
     xz-utils \
     unzip \
     xvfb \
-    openjdk-11-jdk 
+    openjdk-11-jdk
 
 mkdir -p $HOME/Android/Sdk/cmdline-tools
 wget -q https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip -O /tmp/tools.zip
@@ -64,4 +64,4 @@ yes "y" | sdkmanager "platforms;android-30"
 yes "y" | sdkmanager "patcher;v4"
 yes "y" | sdkmanager "build-tools;30.0.2"
 yes "y" | sdkmanager "ndk;21.3.6528147"
-yes "y" | sdkmanager --licenses 
+yes "y" | sdkmanager --licenses
