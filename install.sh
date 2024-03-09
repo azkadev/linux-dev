@@ -2,15 +2,26 @@ echo "started install Dependencies"
 
 export DEBIAN_FRONTEND=noninteractive
 
-export ANDROID_SDK="/opt/android-sdk"
-export ANDROID_SDK_ROOT="/opt/android-sdk"
-export ANDROID_HOME="/opt/android-sdk"
+export ANDROID_SDK="$HOME/Android/Sdk"
+export ANDROID_SDK_ROOT="$HOME/Android/Sdk"
+export ANDROID_HOME="$HOME/Android/Sdk"
 export PATH="$ANDROID_HOME/cmdline-tools/latest/bin/:$PATH"
 export PATH="$ANDROID_HOME/cmdline-tools/latest/:$PATH"
 export PATH="$ANDROID_HOME/emulator/:$PATH"
 export PATH="$ANDROID_HOME/platform-tools/:$PATH"
 export PATH="$ANDROID_SDK:$PATH"
-export PATH="$PATH:/usr/local/flutter/bin"
+export PATH="$PATH:$HOME/development/flutter/bin"
+
+echo "export ANDROID_SDK=$HOME/Android/Sdk" >> ~/.bashrc
+echo "export ANDROID_SDK_ROOT=$HOME/Android/Sdk" >> ~/.bashrc
+echo "export ANDROID_HOME=$HOME/Android/Sdk" >> ~/.bashrc
+echo "export PATH=$ANDROID_HOME/cmdline-tools/latest/bin/:$PATH" >> ~/.bashrc
+echo "export PATH=$ANDROID_HOME/cmdline-tools/latest/:$PATH" >> ~/.bashrc
+echo "export PATH=$ANDROID_HOME/emulator/:$PATH" >> ~/.bashrc
+echo "export PATH=$ANDROID_HOME/platform-tools/:$PATH" >> ~/.bashrc
+echo "export PATH=$ANDROID_SDK:$PATH" >> ~/.bashrc
+echo "export PATH=$PATH:$HOME/development/flutter/bin" >> ~/.bashrc
+
 
 sudo apt-get update
 
@@ -37,27 +48,17 @@ sudo apt-get install -y --no-install-recommends \
     xvfb \
     openjdk-11-jdk 
 
-mkdir -p /opt/android-sdk/cmdline-tools
+mkdir -p $HOME/Android/Sdk/cmdline-tools
 wget -q https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip -O /tmp/tools.zip
-unzip -q /tmp/tools.zip -d /opt/android-sdk/cmdline-tools
-sudo cp -rf /opt/android-sdk/cmdline-tools/cmdline-tools /opt/android-sdk/cmdline-tools/latest
-echo "export PATH=$PATH:/opt/android-sdk/cmdline-tools/latest/bin" >> ~/.bashrc
+unzip -q /tmp/tools.zip -d $HOME/Android/Sdk/cmdline-tools
+sudo cp -rf $HOME/Android/Sdk/cmdline-tools/cmdline-tools $HOME/Android/Sdk/cmdline-tools/latest
+echo "export PATH=$PATH:$HOME/Android/Sdk/cmdline-tools/latest/bin" >> ~/.bashrc
 
-echo "export ANDROID_SDK=/opt/android-sdk" >> ~/.bashrc
-echo "export ANDROID_SDK_ROOT=/opt/android-sdk" >> ~/.bashrc
-echo "export ANDROID_HOME=/opt/android-sdk" >> ~/.bashrc
-echo "export PATH=$ANDROID_HOME/cmdline-tools/latest/bin/:$PATH" >> ~/.bashrc
-echo "export PATH=$ANDROID_HOME/cmdline-tools/latest/:$PATH" >> ~/.bashrc
-echo "export PATH=$ANDROID_HOME/emulator/:$PATH" >> ~/.bashrc
-echo "export PATH=$ANDROID_HOME/platform-tools/:$PATH" >> ~/.bashrc
-echo "export PATH=$ANDROID_SDK:$PATH" >> ~/.bashrc
-echo "export PATH=$PATH:/usr/local/flutter/bin" >> ~/.bashrc
-
-yes "y" | /opt/android-sdk/cmdline-tools/latest/bin/sdkmanager
-yes "y" | /opt/android-sdk/cmdline-tools/latest/bin/sdkmanager --update
-yes "y" | /opt/android-sdk/cmdline-tools/latest/bin/sdkmanager "platform-tools"
-yes "y" | /opt/android-sdk/cmdline-tools/latest/bin/sdkmanager "platforms;android-30"
-yes "y" | /opt/android-sdk/cmdline-tools/latest/bin/sdkmanager "patcher;v4"
-yes "y" | /opt/android-sdk/cmdline-tools/latest/bin/sdkmanager "build-tools;30.0.2"
-yes "y" | /opt/android-sdk/cmdline-tools/latest/bin/sdkmanager "ndk;21.3.6528147"
-yes "y" | /opt/android-sdk/cmdline-tools/latest/bin/sdkmanager --licenses 
+# yes "y" | $HOME/Android/Sdk/cmdline-tools/latest/bin/sdkmanager
+# yes "y" | $HOME/Android/Sdk/cmdline-tools/latest/bin/sdkmanager --update
+# yes "y" | $HOME/Android/Sdk/cmdline-tools/latest/bin/sdkmanager "platform-tools"
+# yes "y" | $HOME/Android/Sdk/cmdline-tools/latest/bin/sdkmanager "platforms;android-30"
+# yes "y" | $HOME/Android/Sdk/cmdline-tools/latest/bin/sdkmanager "patcher;v4"
+# yes "y" | $HOME/Android/Sdk/cmdline-tools/latest/bin/sdkmanager "build-tools;30.0.2"
+# yes "y" | $HOME/Android/Sdk/cmdline-tools/latest/bin/sdkmanager "ndk;21.3.6528147"
+# yes "y" | $HOME/Android/Sdk/cmdline-tools/latest/bin/sdkmanager --licenses 
