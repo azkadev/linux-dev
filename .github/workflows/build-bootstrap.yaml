@@ -1,0 +1,44 @@
+name: Build bootstrap
+on: [workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fix permissions
+        run: sudo chown -R $USER:$USER /home/runner/work/alpine-linux-bootstrap
+      - name: Checkout the code
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+      # - name: Install NDK
+        # run: echo "y" | ${ANDROID_HOME}/tools/bin/sdkmanager --install "ndk;21.3.6528147" --sdk_root=${ANDROID_SDK_ROOT}
+      - name: Get android home
+        run: echo ${ANDROID_HOME}
+      - name: Build the bootstrap
+        run: |
+          mkdir -p ~/Android
+          ln -s ${ANDROID_HOME} ~/Android/Sdk 
+          # chown -R $USER:$USER /home/runner/work/alpine-linux-bootstrap
+          ./generate-bootstraps.sh
+        working-directory: ./scripts
+      # - name: Create github release
+      #   uses: softprops/action-gh-release@v1
+      #   if: startsWith(github.ref, 'refs/tags/')
+      #   with:
+      #     files: ./scripts/build/*.zip
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+      - name: Publish Release
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: "${{ github.token }}"
+          automatic_release_tag: "latest-android"
+          prerelease: false
+          title: "Release android"
+          files: |
+            ./scripts/build/*.zip

@@ -1,0 +1,48 @@
+PROOT_V='0.12_fork'
+TALLOC_V='2.4.0'
+
+# `pre5' is for Android API < 21 where we can't _FILE_OFFSET_BITS=64 at least
+
+ARCHS='aarch64 armv7a armv7a-pre5 x86_64 i686 i686-pre5'
+
+BASE_DIR="$PWD"
+
+BUILD_DIR="$BASE_DIR/build"
+mkdir -p "$BUILD_DIR"
+
+PKG_DIR="$BASE_DIR/packages"
+mkdir -p "$PKG_DIR"
+
+NDK="$HOME/Android/Sdk/ndk/21.3.6528147"
+TOOLCHAIN="$NDK/toolchains/llvm/prebuilt/linux-$(uname -m)"
+
+set-arch() {
+	MARCH="${1%%-*}"
+	if [ "$MARCH" != "$1" ]
+	then SUBARCH="${1#*-}"
+	else SUBARCH=''
+	fi
+
+	if [ "$SUBARCH" == 'pre5' ]
+	then API=16
+	else API=21
+	fi
+
+	INSTALL_ROOT="$BUILD_DIR/root-$ARCH/root"
+	STATIC_ROOT="$BUILD_DIR/static-$ARCH/root"
+
+	case "$MARCH" in
+		arm*) MARCH_T='arm' ;;
+		*) MARCH_T="$MARCH" ;;
+	esac
+
+	export AR="$(echo $TOOLCHAIN/bin/$MARCH_T-linux-android*-ar)"
+	export AS="$(echo $TOOLCHAIN/bin/$MARCH_T-linux-android*-as)"
+	export CC="$(echo $TOOLCHAIN/bin/$MARCH-linux-android*$API-clang)"
+	export CXX="$(echo $TOOLCHAIN/bin/$MARCH-linux-android*$API-clang++)"
+	export LD="$(echo $TOOLCHAIN/bin/$MARCH_T-linux-android*-ld)"
+	export RANLIB="$(echo $TOOLCHAIN/bin/$MARCH_T-linux-android*-ranlib)"
+	export STRIP="$(echo $TOOLCHAIN/bin/$MARCH_T-linux-android*-strip)"
+	export OBJCOPY="$(echo $TOOLCHAIN/bin/$MARCH_T-linux-android*-objcopy)"
+	export OBJDUMP="$(echo $TOOLCHAIN/bin/$MARCH_T-linux-android*-objdump)"
+}

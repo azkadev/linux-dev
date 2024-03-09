@@ -1,0 +1,1 @@
+sdkmanager --install "ndk;21.3.6528147"

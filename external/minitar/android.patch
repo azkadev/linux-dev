@@ -1,0 +1,77 @@
+--- libarchive/archive_write_disk_posix.c
++++ libarchive/archive_write_disk_posix.c
+@@ -2206,8 +2206,8 @@ restore_entry(struct archive_write_disk *a)
+ 	if (en) {
+ 		/* Everything failed; give up here. */
+ 		if ((&a->archive)->error == NULL)
+-			archive_set_error(&a->archive, en, "Can't create '%s'",
+-			    a->name);
++			archive_set_error(&a->archive, en, "Can't create '%s', errno = %d",
++				a->name, en);
+ 		return (ARCHIVE_FAILED);
+ 	}
+ 
+@@ -2237,13 +2237,13 @@ create_filesystem_object(struct archive_write_disk *a)
+ 	/* Since link(2) and symlink(2) don't handle modes, we're done here. */
+ 	linkname = archive_entry_hardlink(a->entry);
+ 	if (linkname != NULL) {
+-#if !HAVE_LINK
++#if !(HAVE_LINK || (defined(IS_ANDROID_NOROOT) && HAVE_SYMLINK))
+ 		return (EPERM);
+ #else
+ 		archive_string_init(&error_string);
+ 		linkname_copy = strdup(linkname);
+ 		if (linkname_copy == NULL) {
+-		    return (EPERM);
++			return (ENOMEM);
+ 		}
+ 		/*
+ 		 * TODO: consider using the cleaned-up path as the link
+@@ -2284,7 +2284,34 @@ create_filesystem_object(struct archive_write_disk *a)
+ 		 */
+ 		if (a->flags & ARCHIVE_EXTRACT_SAFE_WRITES)
+ 			unlink(a->name);
++#ifndef IS_ANDROID_NOROOT
+ 		r = link(linkname, a->name) ? errno : 0;
++		if (r != 0)
++			archive_set_error(&a->archive, ARCHIVE_FAILED, "Can't create hard link '%s', errno = %d",
++				a->name, r);
++#else /* IS_ANDROID_NOROOT */
++/*
++ * Nonrooted Android can't do hard links!
++ * Just pretend they are symlinks.
++ * Let's treat the archive root as a chroot root for now.
++ * TODO: Fix this temporary solution later.
++ */
++		if (linkname[0] != '/') {
++			if (linkname[0] == '.' && linkname[1] == '/') {
++				r = symlink(linkname + 1, a->name) ? errno : 0;
++			} else {
++				char _linkname[strlen(linkname) + 2];
++				_linkname[0] = '/';
++				strcpy(_linkname + 1, linkname);
++				r = symlink(_linkname, a->name) ? errno : 0;
++			}
++		} else {
++			r = symlink(linkname, a->name) ? errno : 0;
++		}
++		if (r != 0)
++			archive_set_error(&a->archive, ARCHIVE_FAILED, "Can't create a symlink substitution of the hardlink '%s', errno = %d",
++				a->name, r);
++#endif /* IS_ANDROID_NOROOT */
+ 		/*
+ 		 * New cpio and pax formats allow hardlink entries
+ 		 * to carry data, so we may have to open the file
+@@ -2329,7 +2356,11 @@ create_filesystem_object(struct archive_write_disk *a)
+ 		 */
+ 		if (a->flags & ARCHIVE_EXTRACT_SAFE_WRITES)
+ 			unlink(a->name);
+-		return symlink(linkname, a->name) ? errno : 0;
++		r = symlink(linkname, a->name) ? errno : 0;
++		if (r != 0)
++			archive_set_error(&a->archive, ARCHIVE_FAILED, "Can't create symlink '%s', errno = %d",
++				a->name, r);
++		return (r);
+ #else
+ 		return (EPERM);
+ #endif
