@@ -22,6 +22,7 @@ echo "export PATH=$ANDROID_HOME/platform-tools/:$PATH" >> ~/.bashrc
 echo "export PATH=$ANDROID_SDK:$PATH" >> ~/.bashrc
 echo "export PATH=$PATH:$HOME/development/flutter/bin" >> ~/.bashrc
 
+source ~/.bashrc
 
 sudo apt-get update
 
@@ -54,11 +55,11 @@ unzip -q /tmp/tools.zip -d $HOME/Android/Sdk/cmdline-tools
 sudo cp -rf $HOME/Android/Sdk/cmdline-tools/cmdline-tools $HOME/Android/Sdk/cmdline-tools/latest
 echo "export PATH=$PATH:$HOME/Android/Sdk/cmdline-tools/latest/bin" >> ~/.bashrc
 
-# yes "y" | $HOME/Android/Sdk/cmdline-tools/latest/bin/sdkmanager
-# yes "y" | $HOME/Android/Sdk/cmdline-tools/latest/bin/sdkmanager --update
-# yes "y" | $HOME/Android/Sdk/cmdline-tools/latest/bin/sdkmanager "platform-tools"
-# yes "y" | $HOME/Android/Sdk/cmdline-tools/latest/bin/sdkmanager "platforms;android-30"
-# yes "y" | $HOME/Android/Sdk/cmdline-tools/latest/bin/sdkmanager "patcher;v4"
-# yes "y" | $HOME/Android/Sdk/cmdline-tools/latest/bin/sdkmanager "build-tools;30.0.2"
-# yes "y" | $HOME/Android/Sdk/cmdline-tools/latest/bin/sdkmanager "ndk;21.3.6528147"
-# yes "y" | $HOME/Android/Sdk/cmdline-tools/latest/bin/sdkmanager --licenses 
+yes "y" | sdkmanager
+yes "y" | sdkmanager --update
+yes "y" | sdkmanager "platform-tools"
+yes "y" | sdkmanager "platforms;android-30"
+yes "y" | sdkmanager "patcher;v4"
+yes "y" | sdkmanager "build-tools;30.0.2"
+yes "y" | sdkmanager "ndk;21.3.6528147"
+yes "y" | sdkmanager --licenses 
