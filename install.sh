@@ -21,6 +21,7 @@ echo "export PATH=$ANDROID_HOME/emulator/:$PATH" >> ~/.bashrc
 echo "export PATH=$ANDROID_HOME/platform-tools/:$PATH" >> ~/.bashrc
 echo "export PATH=$ANDROID_SDK:$PATH" >> ~/.bashrc
 echo "export PATH=$PATH:$HOME/development/flutter/bin" >> ~/.bashrc
+mkdir "$HOME/development/"
 
 source ~/.bashrc
 
