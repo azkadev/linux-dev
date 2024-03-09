@@ -1,1 +1,4 @@
-sdkmanager --install "ndk;21.3.6528147"
+# /bin/sh
+
+cd scripts/
+./generate-bootstraps.sh

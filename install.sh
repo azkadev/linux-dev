@@ -1,3 +1,4 @@
+# /bin/sh
 echo "started install Dependencies"
 
 export DEBIAN_FRONTEND=noninteractive
