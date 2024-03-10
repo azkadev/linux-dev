@@ -9,20 +9,36 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v3
         with:
-          submodules: true
-      # - uses: actions/setup-python@v5
-        # with:
-          # python-version: '3.11.6'
+          submodules: true 
       - name: Install Depends
         run: ./install.sh 
-      - name: Build
-        run: ./build.sh 
-      - name: Publish Release
+      - name: Build Alpine
+        run: |
+         cd scripts
+         ./alpine-bootstraps.sh
+
+      - name: Alpine Linux Release
         uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: ${{ secrets.TOKEN_GITHUB }}
-          automatic_release_tag: "latest"
+          automatic_release_tag: "latest-alpine"
           prerelease: false
-          title: "Release"
+          title: "Alpine"
           files: |
             ./scripts/build/*.zip
+  
+      - name: Build Ubuntu
+        run: |
+         cd scripts
+         ./ubuntu-bootstraps.sh
+
+      - name: Ubuntu Linux Release
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: ${{ secrets.TOKEN_GITHUB }}
+          automatic_release_tag: "latest-ubuntu"
+          prerelease: false
+          title: "Ubuntu"
+          files: |
+            ./scripts/build/*.zip
+  
