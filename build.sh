@@ -1,4 +1,7 @@
 # /bin/sh
 
 cd scripts/
-./generate-bootstraps.sh
+
+
+./alpine-bootstraps.sh
+./ubuntu-bootstraps.sh
