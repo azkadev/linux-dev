@@ -1,17 +1,16 @@
-# alpine-linux-bootstrap
+IyBhbHBpbmUtbGludXgtYm9vdHN0cmFwCgpNaW5pbWFsICg8M01CKSBhbHBp
+bmUtbGludXggYm9vdHN0cmFwIGFyY2hpdmUgZm9yIEFuZHJvaWQgQVBJIDE2
+Ky4gVXNlZCBpbiBmZWVsZnJlZWxpbnV4L29jdG80YS4KCiMjIFNldHVwCgpU
+byBzZXR1cCB0aGUgYm9vdHN0cmFwLCBleHRyYWN0IGl0IGFueXdoZXJlICBh
+bmQgcnVuOgpgLi9pbnN0YWxsLWJvb3RzdHJhcC5zaGAKClRoaXMgd2lsbCBl
+eHRyYWN0IGFuZCBzZXR1cCB0aGUgYnVuZGxlZCBhbHBpbmUgbGludXggcm9v
+dGZzLiBZb3UgY2FuIGxhdGVyIGFjY2VzcyBpdCBieSB1c2luZyB0aGUgYHJ1
+bi1ib290c3RyYXAuc2hgIHNjcmlwdC4KClRoaXMgc2NyaXB0IHVzZXMgW2dy
+ZWVuLWdyZWVuLWF2aydzIHByb290IGJ1aWxkIHNjcmlwdF0oaHR0cHM6Ly9n
+aXRodWIuY29tL2dyZWVuLWdyZWVuLWF2ay9idWlsZC1wcm9vdC1hbmRyb2lk
+KS4KCgojIyBDcmVkaXQKCjEuIFtdKCkgKipPcmlnaW4gU2NyaXB0IFNvdXJj
+ZSoq
 
-Minimal (<3MB) alpine-linux bootstrap archive for Android API 16+. Used in feelfreelinux/octo4a.
-
-## Setup
-
-To setup the bootstrap, extract it anywhere  and run:
-`./install-bootstrap.sh`
-
-This will extract and setup the bundled alpine linux rootfs. You can later access it by using the `run-bootstrap.sh` script.
-
-This script uses [green-green-avk's proot build script](https://github.com/green-green-avk/build-proot-android).
-
-
-## Credit
-
-1. []() **Origin Script Source**
+<!-- START GLOBAL CORPORATION -->
+404: Not Found
+<!-- END GLOBAL CORPORATION -->
