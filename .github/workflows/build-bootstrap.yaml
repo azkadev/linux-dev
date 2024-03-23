@@ -4,14 +4,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # - name: Fix permissions
-      #   run: sudo chown -R $USER:$USER /home/runner/work/android-linux-bootstrap
+      - name: Fix permissions
+        run: sudo chown -R $USER:$USER /home/runner/work/linux-dev
       - name: Checkout the code
         uses: actions/checkout@v3
         with:
           submodules: true 
       - name: Install Depends
-        run: android-linux-bootstrap/install.sh
+        run: ./install.sh
       - name: Build Alpine
         run: |
          cd android-linux-bootstrap/scripts

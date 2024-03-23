@@ -6,7 +6,7 @@ echo "Creating bootstrap for all archs"
 SCRIPTS_PATH=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd "$SCRIPTS_PATH"
 echo "Building proot..."
-cd ../../external/proot/
+cd ../external/proot/
 
 ./build.sh
 
@@ -21,7 +21,7 @@ rm -rf *
 cp ../ioctlHook.c .
 ../build-ioctl-hook.sh
 
-cp -r ../../../external/proot/build/* .
+cp -r ../../external/proot/build/* .
 
 build_bootstrap () {
 	echo "Packing bootstrap for arch $1"
@@ -52,7 +52,7 @@ build_bootstrap () {
 		;;
 	esac
 	cd root-$PROOT_ARCH
-	cp ../../../../external/minitar/build/libs/$ANDROID_ARCH/minitar root/bin/minitar
+	cp ../../../external/minitar/build/libs/$ANDROID_ARCH/minitar root/bin/minitar
 
 	# separate binaries for platforms < android 5 not supporting 64bit
 	if [[ "$1" == "armhf" || "$1" == "i386" ]]; then
@@ -79,6 +79,6 @@ build_bootstrap () {
 }
 
 build_bootstrap aarch64
-build_bootstrap armhf
-build_bootstrap x86_64
-build_bootstrap x86
+# build_bootstrap armhf
+# build_bootstrap x86_64
+# build_bootstrap x86

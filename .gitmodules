@@ -1,6 +1,6 @@
-[submodule "external/proot"]
-path = external/proot
+[submodule "android-linux-bootstrap/external/proot"]
+path = android-linux-bootstrap/external/proot
 url = https://github.com/feelfreelinux/build-proot-android
-[submodule "external/minitar"]
-path = external/minitar
+[submodule "android-linux-bootstrap/external/proot"]
+path = android-linux-bootstrap/external/proot
 url = https://github.com/green-green-avk/build-libarchive-minitar-android
