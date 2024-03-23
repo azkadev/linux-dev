@@ -37,7 +37,7 @@ jobs:
           prerelease: false
           title: "Alpine"
           files: |
-            ./scripts/build/*.zip
+            android-linux-bootstrap/scripts/build/*.zip
   
       - name: Build Ubuntu
         run: |
@@ -52,5 +52,5 @@ jobs:
           prerelease: false
           title: "Ubuntu"
           files: |
-            ./scripts/build/*.zip
+            android-linux-bootstrap/scripts/build/*.zip
   
