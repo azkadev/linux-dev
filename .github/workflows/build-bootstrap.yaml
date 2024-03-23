@@ -1,0 +1,45 @@
+name: Build bootstrap
+on: [workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # - name: Fix permissions
+      #   run: sudo chown -R $USER:$USER /home/runner/work/android-linux-bootstrap
+      - name: Checkout the code
+        uses: actions/checkout@v3
+        with:
+          submodules: true 
+      - name: Install Depends
+        run: android-linux-bootstrap/install.sh
+      - name: Build Alpine
+        run: |
+         cd android-linux-bootstrap/scripts
+         
+         ./alpine-bootstraps.sh
+
+      - name: Alpine Linux Release
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: ${{ secrets.TOKEN_GITHUB }}
+          automatic_release_tag: "latest-alpine"
+          prerelease: false
+          title: "Alpine"
+          files: |
+            ./scripts/build/*.zip
+  
+      - name: Build Ubuntu
+        run: |
+         cd android-linux-bootstrap/scripts
+         ./ubuntu-bootstraps.sh
+
+      - name: Ubuntu Linux Release
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: ${{ secrets.TOKEN_GITHUB }}
+          automatic_release_tag: "latest-ubuntu"
+          prerelease: false
+          title: "Ubuntu"
+          files: |
+            ./scripts/build/*.zip
+  

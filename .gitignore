@@ -1,0 +1,9 @@
+*/build/
+
+*.iso
+*.tar.gz
+alpine-shell/checkra1n
+*.md
+
+external/proot/build
+external/minitar/build
