@@ -1,0 +1,5 @@
+build/
+
+*.iso  
+
+*.tar.gz
