@@ -15,31 +15,15 @@ jobs:
       - name: Build Alpine
         run: |
          cd android-linux-bootstrap/scripts
-         
-         ./alpine-bootstraps.sh
+
+         ./build-bootstraps.sh
 
       - name: Alpine Linux Release
         uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: ${{ secrets.TOKEN_GITHUB }}
-          automatic_release_tag: "latest-alpine"
+          automatic_release_tag: "latest-android"
           prerelease: false
-          title: "Alpine"
+          title: "Android Linux BootStrap"
           files: |
             android-linux-bootstrap/scripts/build/*.zip
-  
-      - name: Build Ubuntu
-        run: |
-         cd android-linux-bootstrap/scripts
-         ./ubuntu-bootstraps.sh
-
-      - name: Ubuntu Linux Release
-        uses: marvinpinto/action-automatic-releases@latest
-        with:
-          repo_token: ${{ secrets.TOKEN_GITHUB }}
-          automatic_release_tag: "latest-ubuntu"
-          prerelease: false
-          title: "Ubuntu"
-          files: |
-            android-linux-bootstrap/scripts/build/*.zip
-  
