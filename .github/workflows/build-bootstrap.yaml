@@ -12,6 +12,17 @@ jobs:
           submodules: true 
       - name: Install Depends
         run: ./install.sh
+
+      - name: Build External Minitar
+        run: |
+         cd android-linux-bootstrap/external/minitar
+         ./build.sh
+
+      - name: Build External Proot
+        run: |
+         cd android-linux-bootstrap/external/proot
+         ./build.sh
+         
       - name: Build Alpine
         run: |
          cd android-linux-bootstrap/scripts
