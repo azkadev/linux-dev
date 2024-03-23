@@ -92,12 +92,12 @@ build_bootstrap_ubuntu () {
 	   ANDROID_ARCH="arm64-v8a";
 	   MUSL_ARCH="aarch64-linux-musl";
 	   UBUNTU_URL_DOWNLOAD="https://cdimage.ubuntu.com/ubuntu-base/releases/$UBUNTU_RELEASE/release/ubuntu-base-$UBUNTU_RELEASE-base-arm64.tar.gz";
-    elif [[ $1 == "armhf" ]]; then  
+    elif [[ $1 == "armhf" ]]; then
 	   PROOT_ARCH="armv7a"
 	   ANDROID_ARCH="armeabi-v7a"
 	   MUSL_ARCH="arm-linux-musleabihf"
 	   UBUNTU_URL_DOWNLOAD="https://cdimage.ubuntu.com/ubuntu-base/releases/$UBUNTU_RELEASE/release/ubuntu-base-$UBUNTU_RELEASE-base-armhf.tar.gz";
-    else [[ $1 == "x86_64" ]]; then 
+    elif [[ $1 == "x86_64" ]]; then
 	   PROOT_ARCH="x86_64"
 	   ANDROID_ARCH="x86_64"
 	   MUSL_ARCH="x86_64-linux-musl"
@@ -106,7 +106,7 @@ build_bootstrap_ubuntu () {
       echo "Invalid Arch";
 	  echo "skip $1"
 	  return;
-    fi
+    fi 
 
 	echo "Build UBUNTU $UBUNTU_RELEASE";
 	echo "URL DOWNLOAD UBUNTU $UBUNTU_URL_DOWNLOAD";
