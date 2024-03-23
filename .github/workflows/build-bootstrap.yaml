@@ -12,13 +12,13 @@ jobs:
           submodules: true 
       - name: Install Depends
         run: ./install.sh
-      - name: Build Alpine
+      - name: Build Android BootStrap
         run: |
          cd android-linux-bootstrap/scripts
 
          ./build-bootstraps.sh
 
-      - name: Alpine Linux Release
+      - name: Android Linux Release
         uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: ${{ secrets.TOKEN_GITHUB }}

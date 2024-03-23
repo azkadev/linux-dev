@@ -1,4 +1,5 @@
 #!/bin/bash
+
 set -e
 
 echo "Creating bootstrap for all archs"
@@ -25,7 +26,7 @@ cp -r ../../external/proot/build/* .
 
 build_bootstrap_alpine () {
 	echo "Packing bootstrap for arch $1"
-	
+    
 	case $1 in
 	aarch64)
 		PROOT_ARCH="aarch64"
@@ -80,33 +81,36 @@ build_bootstrap_alpine () {
 
 
 build_bootstrap_ubuntu () {
-	echo "Packing bootstrap for arch $1"
+	echo "Packing bootstrap for arch $1";
+
+	UBUNTU_RELEASE="23.10";
+	UBUNTU_URL_DOWNLOAD="https://cdimage.ubuntu.com/ubuntu-base/releases/$UBUNTU_RELEASE/release/ubuntu-base-$UBUNTU_RELEASE-base-arm64.tar.gz";
 	
-	case $1 in
-	aarch64)
-		PROOT_ARCH="aarch64"
-		ANDROID_ARCH="arm64-v8a"
-		MUSL_ARCH="aarch64-linux-musl"
-		;;
-	armhf)
-		PROOT_ARCH="armv7a"
-		ANDROID_ARCH="armeabi-v7a"
-		MUSL_ARCH="arm-linux-musleabihf"
-		;;
-	x86_64)
-		PROOT_ARCH="x86_64"
-		ANDROID_ARCH="x86_64"
-		MUSL_ARCH="x86_64-linux-musl"
-		;;
-	x86)
-		PROOT_ARCH="i686"
-		ANDROID_ARCH="x86"
-		MUSL_ARCH="i686-linux-musl"
-		;;
-	*)
-		echo "Invalid arch"
-		;;
-	esac
+	
+    if [[ $1 == "aarch64" ]]; then
+	   PROOT_ARCH="aarch64";
+	   ANDROID_ARCH="arm64-v8a";
+	   MUSL_ARCH="aarch64-linux-musl";
+	   UBUNTU_URL_DOWNLOAD="https://cdimage.ubuntu.com/ubuntu-base/releases/$UBUNTU_RELEASE/release/ubuntu-base-$UBUNTU_RELEASE-base-arm64.tar.gz";
+    elif [[ $1 == "armhf" ]]; then  
+	   PROOT_ARCH="armv7a"
+	   ANDROID_ARCH="armeabi-v7a"
+	   MUSL_ARCH="arm-linux-musleabihf"
+	   UBUNTU_URL_DOWNLOAD="https://cdimage.ubuntu.com/ubuntu-base/releases/$UBUNTU_RELEASE/release/ubuntu-base-$UBUNTU_RELEASE-base-armhf.tar.gz";
+    else [[ $1 == "x86_64" ]]; then 
+	   PROOT_ARCH="x86_64"
+	   ANDROID_ARCH="x86_64"
+	   MUSL_ARCH="x86_64-linux-musl"
+	   UBUNTU_URL_DOWNLOAD="https://cdimage.ubuntu.com/ubuntu-base/releases/$UBUNTU_RELEASE/release/ubuntu-base-$UBUNTU_RELEASE-base-amd64.tar.gz";
+    else
+      echo "Invalid Arch";
+	  echo "skip $1"
+	  return;
+    fi
+
+	echo "Build UBUNTU $UBUNTU_RELEASE";
+	echo "URL DOWNLOAD UBUNTU $UBUNTU_URL_DOWNLOAD";
+
 	cd root-$PROOT_ARCH
 	cp ../../../external/minitar/build/libs/$ANDROID_ARCH/minitar root/bin/minitar
 
@@ -117,9 +121,8 @@ build_bootstrap_ubuntu () {
 	fi
 
 
-	UBUNTU_RELEASE="23.10" 
-	echo "Downloading UBUNTU $UBUNTU_RELEASE"
-	curl --fail -o rootfs.tar.xz -L "https://cdimage.ubuntu.com/ubuntu-base/releases/$UBUNTU_RELEASE/release/ubuntu-base-$UBUNTU_RELEASE-base-arm64.tar.gz"
+	curl --fail -o rootfs.tar.xz -L $UBUNTU_URL_DOWNLOAD
+	
 	cp ../../run-bootstrap.sh .
 	cp ../../install-bootstrap.sh .
 	cp ../../fake_proc_stat .
@@ -137,6 +140,6 @@ build_bootstrap () {
 }
 
 build_bootstrap aarch64
-# build_bootstrap armhf
-# build_bootstrap x86_64
-# build_bootstrap x86
+build_bootstrap armhf
+build_bootstrap x86_64
+build_bootstrap x86
