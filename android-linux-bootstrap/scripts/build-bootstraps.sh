@@ -83,7 +83,7 @@ build_bootstrap_alpine () {
 build_bootstrap_ubuntu () {
 	echo "Packing bootstrap for arch $1";
 
-	UBUNTU_RELEASE="23.10";
+	UBUNTU_RELEASE="24.04";
 	UBUNTU_URL_DOWNLOAD="https://cdimage.ubuntu.com/ubuntu-base/releases/$UBUNTU_RELEASE/release/ubuntu-base-$UBUNTU_RELEASE-base-arm64.tar.gz";
 	
 	
